@@ -1690,7 +1690,7 @@ actions:
                 - variables:
                     # use the subsequent attchment variable if set
                     attachment_2: !input attachment_2
-                    attachment: "{{iif(attachment_2, attachment_2, attachment)}}"
+                    attachment: "{{ attachment if attachment_2 in ['', 'none'] else attachment_2 }}"
 
                     event: "{{ wait.trigger.payload_json }}"
                     type: "{{event['type']}}"
