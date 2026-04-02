@@ -1070,7 +1070,9 @@ conditions:
           value_template: >
             {{ trigger.id == 'genai-event' or
                not this.attributes.last_triggered or
-               (now() - this.attributes.last_triggered).seconds > cooldown }}
+               (now() - this.attributes.last_triggered).seconds > cooldown or
+               not filters_satisfied or
+               state_attr(this.entity_id, 'last_action') == 'GenAI Summary' }}
         - alias: Disable Times
           condition: template
           value_template: "{{ not disable_times|length or not now().hour in disable_times|map('int')|list }}"
